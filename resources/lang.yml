@@ -11,6 +11,7 @@ messages:
     in_game_only: "Cette commande doit être utilisée en jeu."
   success:
     addmoney: "Vous avez ajouté {amount} à {player}."
+    addmoney_target: "Vous avez reçu {amount}."
     removemoney: "Vous avez retiré {amount} à {player}."
     setmoney: "Vous avez défini le solde de {player} à {amount}."
     pay_sender: "Vous avez envoyé {amount} à {player}."

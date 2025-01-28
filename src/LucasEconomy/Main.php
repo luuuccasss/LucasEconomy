@@ -52,18 +52,11 @@ class Main extends PluginBase {
         return $this->economyManager;
     }
 
-    public function getLangMessage(string $key, array $placeholders = []): string {
-        $message = $this->lang->getNested($key, null);
-
-        if ($message === null) {
-            $this->getLogger()->error("Message introuvable pour la clé : $key");
-            return "Message manquant : $key";
+    public function getLangMessage(string $key, array $replace = []): string {
+        $message = $this->lang->getNested("messages." . $key, "Message introuvable pour la clé : " . $key);
+        foreach ($replace as $search => $value) {
+            $message = str_replace("{" . $search . "}", $value, $message);
         }
-
-        foreach ($placeholders as $placeholder => $value) {
-            $message = str_replace("{" . $placeholder . "}", $value, $message);
-        }
-
         return $message;
     }
 }
