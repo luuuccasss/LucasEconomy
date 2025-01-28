@@ -4,6 +4,7 @@ messages:
     removemoney: "§cUsage: §e/removemoney <player> <amount>"
     setmoney: "§cUsage: §e/setmoney <player> <amount>"
     pay: "§cUsage: §e/pay <player> <amount>"
+    seemoney: "§cUsage: §e/seemoney <player>"
   errors:
     player_not_found: "§cPlayer not found."
     invalid_amount: "§cInvalid amount."
@@ -16,6 +17,7 @@ messages:
     setmoney: "§aYou have set §e{player}§a's balance to §e{amount}§a."
     pay_sender: "§aYou have sent §e{amount} §ato §e{player}§a."
     pay_receiver: "§aYou have received §e{amount} §afrom §e{player}§a."
+    seemoney: "§e{player}'s §abalance is §e{balance}"
   balance:
     your_balance: "§eYour balance is: §e{balance}"
   top:
@@ -33,3 +35,5 @@ messages:
       description: "Remove money from a player's account."
     setmoney:
       description: "Set a player's balance."
+    seemoney:
+      description: "View a player's balance"

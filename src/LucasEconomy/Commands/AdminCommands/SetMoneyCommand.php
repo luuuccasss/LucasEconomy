@@ -12,7 +12,7 @@ class SetMoneyCommand extends Command {
     private $plugin;
 
     public function __construct(Main $plugin) {
-        parent::__construct("setmoney", $plugin->getLangMessage("commands.setmoney.description"), "/setmoney <joueur> <montant>");
+        parent::__construct("setmoney", $plugin->getLangMessage("commands.setmoney.description"), "/setmoney <player> <amount>");
         $this->plugin = $plugin;
         $this->setPermission("lucaseconomy.admin");
     }

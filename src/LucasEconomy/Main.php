@@ -32,6 +32,7 @@ class Main extends PluginBase {
         $this->getServer()->getCommandMap()->register("LucasEconomy", new BalanceCommand($this));
         $this->getServer()->getCommandMap()->register("LucasEconomy", new PayCommand($this));
         $this->getServer()->getCommandMap()->register("LucasEconomy", new TopBalanceCommand($this));
+        $this->getServer()->getCommandMap()->register("LucasEconomy", new SeeMoneyCommand($this));
 
         $this->getServer()->getCommandMap()->register("LucasEconomy", new AddMoneyCommand($this));
         $this->getServer()->getCommandMap()->register("LucasEconomy", new RemoveMoneyCommand($this));

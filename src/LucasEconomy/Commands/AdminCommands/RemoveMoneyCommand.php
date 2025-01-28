@@ -12,7 +12,7 @@ class RemoveMoneyCommand extends Command {
     private $plugin;
 
     public function __construct(Main $plugin) {
-        parent::__construct("removemoney", $plugin->getLangMessage("commands.removemoney.description"), "/removemoney <joueur> <montant>");
+        parent::__construct("removemoney", $plugin->getLangMessage("commands.removemoney.description"), "/removemoney <player> <amount>");
         $this->plugin = $plugin;
         $this->setPermission("lucaseconomy.admin");
     }

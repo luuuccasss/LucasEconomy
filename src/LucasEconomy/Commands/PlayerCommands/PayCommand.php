@@ -12,7 +12,7 @@ class PayCommand extends Command {
     private $plugin;
 
     public function __construct(Main $plugin) {
-        parent::__construct("pay", $plugin->getLangMessage("commands.pay.description"), "/pay <joueur> <montant>");
+        parent::__construct("pay", $plugin->getLangMessage("commands.pay.description"), "/pay <player> <amount>");
         $this->setPermission("lucaseconomy.pay");
         $this->plugin = $plugin;
     }
