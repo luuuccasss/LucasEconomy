@@ -21,7 +21,6 @@ messages:
   top:
     header: "§6Top richest players:"
 
-
 commands:
   topmoney:
     description: "Voir le classement des joueurs les plus riches."
