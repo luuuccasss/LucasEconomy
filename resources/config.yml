@@ -1,4 +1,6 @@
-# Configuration de LucasEconomy
-currency: "Pièces"
+# Configuration of LucasEconomy
+currency: "Coins"
 starting-balance: 100
 max-balance: 1000000
+
+# Please join : https://discord.gg/33PskyeFh3

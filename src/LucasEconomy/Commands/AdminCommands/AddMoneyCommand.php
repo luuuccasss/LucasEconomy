@@ -15,11 +15,7 @@ class AddMoneyCommand extends Command {
         $this->plugin = $plugin;
         $description = $this->plugin->getLangMessage("commands.addmoney.description", []);
 
-        parent::__construct(
-            "addmoney",
-            $description,
-            "/addmoney <player> <amount>"
-        );
+        parent::__construct("addmoney", $description, "/addmoney <player> <amount>");
 
         $this->setPermission("lucaseconomy.admin");
     }

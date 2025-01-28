@@ -35,7 +35,7 @@ class SeeMoneyCommand extends Command {
             return false;
         }
 
-        $balance = $this->plugin->getEconomyManager()->getMoney($target);
+        $balance = $this->plugin->getEconomyManager()->getBalance($target);
 
         $sender->sendMessage($this->plugin->getLangMessage("success.seemoney", [
             "player" => $target->getName(),

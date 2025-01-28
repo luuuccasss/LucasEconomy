@@ -1,5 +1,7 @@
 # LucasEconomy Plugin Documentation
 
+
+
 LucasEconomy is a plugin that allows you to manage player economies on your server. It’s simple to use, provides admin and player commands, and includes a developer-friendly API for custom features.
 
 ---
@@ -28,5 +30,7 @@ LucasEconomy is a plugin that allows you to manage player economies on your serv
 1. Download the plugin and place it in the `plugins` folder.
 2. Start the server to generate the configuration files.
 3. Use the commands and API as needed.
+
+## [DISCORD](https://discord.gg/33PskyeFh3)
 
 ---
