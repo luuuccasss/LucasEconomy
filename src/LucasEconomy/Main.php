@@ -50,14 +50,15 @@ class Main extends PluginBase {
         return $this->economyManager;
     }
 
-    public function getLangMessage(string $key, array $replacements = []): string {
-        $messages = $this->getConfig()->get("messages", []);
-        $message = $messages[$key] ?? "Message not found: $key";
-
-        foreach ($replacements as $placeholder => $value) {
-            $message = str_replace("{" . $placeholder . "}", $value, $message);
+    public function getLangMessage(string $key, array $replace = []): string {
+        $key = "messages." . $key;
+        $message = $this->lang->getNested($key, "Message not found : " . $key);
+        foreach ($replace as $search => $value) {
+            $message = str_replace("{" . $search . "}", $value, $message);
         }
 
         return $message;
     }
+
+
 }

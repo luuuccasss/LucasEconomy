@@ -9,52 +9,57 @@ use LucasEconomy\Main;
 
 class AddMoneyCommand extends Command {
 
-    private $plugin;
+private $plugin;
 
-    public function __construct(Main $plugin) {
-        parent::__construct("addmoney", $plugin->getLangMessage("commands.addmoney.description"), "/addmoney <joueur> <montant>");
-        $this->plugin = $plugin;
+public function __construct(Main $plugin) {
+$this->plugin = $plugin;
+
+// Récupération du message de description via getLangMessage
+$description = $this->plugin->getLangMessage("commands.addmoney.description", []);
+
+// Appel du constructeur parent avec la description
+parent::__construct(
+"addmoney",
+$description, // Description depuis les messages
+"/addmoney <joueur> <montant>"
+        );
+
         $this->setPermission("lucaseconomy.admin");
-    }
+        }
 
-    public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
+        public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
         if (!$this->testPermission($sender)) {
-            return false; // Vérifie la permission de l'utilisateur
+        return false;
         }
 
-        // Vérifie si les arguments sont suffisants
         if (count($args) < 2) {
-            $sender->sendMessage($this->plugin->getLangMessage("usage.addmoney"));
-            return false;
+        $sender->sendMessage($this->plugin->getLangMessage("usage.addmoney"));
+        return false;
         }
 
-        // Récupère le joueur cible
         $target = $this->plugin->getServer()->getPlayerByPrefix($args[0]);
         if (!$target instanceof Player) {
-            $sender->sendMessage($this->plugin->getLangMessage("errors.player_not_found"));
-            return false;
+        $sender->sendMessage($this->plugin->getLangMessage("errors.player_not_found"));
+        return false;
         }
 
-        // Vérifie et parse le montant
         $amount = (float)$args[1];
         if (!is_numeric($args[1]) || $amount <= 0) {
-            $sender->sendMessage($this->plugin->getLangMessage("errors.invalid_amount"));
-            return false;
+        $sender->sendMessage($this->plugin->getLangMessage("errors.invalid_amount"));
+        return false;
         }
 
-        // Ajoute l'argent au joueur cible
         $this->plugin->getEconomyManager()->addMoney($target, $amount);
 
-        // Messages de confirmation
         $sender->sendMessage($this->plugin->getLangMessage("success.addmoney", [
-            "amount" => $amount,
-            "player" => $target->getName()
+        "amount" => $amount,
+        "player" => $target->getName()
         ]));
 
         $target->sendMessage($this->plugin->getLangMessage("success.addmoney_target", [
-            "amount" => $amount
+        "amount" => $amount
         ]));
 
         return true;
-    }
-}
+        }
+        }
