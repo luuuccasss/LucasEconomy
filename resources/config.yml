@@ -1,0 +1,4 @@
+# Configuration de LucasEconomy
+currency: "Pièces"
+starting-balance: 100
+max-balance: 1000000
