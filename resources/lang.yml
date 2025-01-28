@@ -1,22 +1,37 @@
 messages:
   usage:
-    addmoney: "Usage: /addmoney <joueur> <montant>"
-    removemoney: "Usage: /removemoney <joueur> <montant>"
-    setmoney: "Usage: /setmoney <joueur> <montant>"
-    pay: "Usage: /pay <joueur> <montant>"
+    addmoney: "§eUsage: §6/addmoney <player> <amount>"
+    removemoney: "§eUsage: §6/removemoney <player> <amount>"
+    setmoney: "§eUsage: §6/setmoney <player> <amount>"
+    pay: "§eUsage: §6/pay <player> <amount>"
   errors:
-    player_not_found: "Joueur introuvable."
-    invalid_amount: "Montant invalide."
-    insufficient_balance: "Solde insuffisant."
-    in_game_only: "Cette commande doit être utilisée en jeu."
+    player_not_found: "§cPlayer not found."
+    invalid_amount: "§cInvalid amount."
+    insufficient_balance: "§cInsufficient balance."
+    in_game_only: "§cThis command must be used in-game."
   success:
-    addmoney: "Vous avez ajouté {amount} à {player}."
-    addmoney_target: "Vous avez reçu {amount}."
-    removemoney: "Vous avez retiré {amount} à {player}."
-    setmoney: "Vous avez défini le solde de {player} à {amount}."
-    pay_sender: "Vous avez envoyé {amount} à {player}."
-    pay_receiver: "Vous avez reçu {amount} de {player}."
+    addmoney: "§aYou have added §6{amount} §ato §6{player}§a."
+    addmoney_target: "§aYou have received §6{amount}§a."
+    removemoney: "§aYou have removed §6{amount} §afrom §6{player}§a."
+    setmoney: "§aYou have set §6{player}§a's balance to §6{amount}§a."
+    pay_sender: "§aYou have sent §6{amount} §ato §6{player}§a."
+    pay_receiver: "§aYou have received §6{amount} §afrom §6{player}§a."
   balance:
-    your_balance: "Votre solde est de : {balance}"
+    your_balance: "§eYour balance is: §6{balance}"
   top:
-    header: "Classement des joueurs les plus riches :"
+    header: "§6Top richest players:"
+
+
+commands:
+  topmoney:
+    description: "Voir le classement des joueurs les plus riches."
+  pay:
+    description: "Envoyer de l'argent à un joueur."
+  balance:
+    description: "Voir votre solde."
+  addmoney:
+    description: "Ajouter de l'argent à un joueur."
+  removemoney:
+    description: "Retirer de l'argent à un joueur."
+  setmoney:
+    description: "Définir le solde d'un joueur."

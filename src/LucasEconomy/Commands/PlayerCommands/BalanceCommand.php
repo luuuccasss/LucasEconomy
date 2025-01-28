@@ -12,7 +12,7 @@ class BalanceCommand extends Command {
     private $plugin;
 
     public function __construct(Main $plugin) {
-        parent::__construct("balance", "Voir votre solde.");
+        parent::__construct("balance", $plugin->getLangMessage("commands.balance.description"));
         $this->setPermission("lucaseconomy.balance");
         $this->plugin = $plugin;
     }

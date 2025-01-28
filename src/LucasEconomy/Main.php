@@ -37,11 +37,9 @@ class Main extends PluginBase {
         $this->getServer()->getCommandMap()->register("LucasEconomy", new RemoveMoneyCommand($this));
         $this->getServer()->getCommandMap()->register("LucasEconomy", new SetMoneyCommand($this));
 
-        $this->getLogger()->info("LucasEconomy activé !");
     }
 
     public function onDisable(): void {
-        $this->getLogger()->info("LucasEconomy désactivé !");
     }
 
     public static function getInstance(): self {
@@ -53,7 +51,7 @@ class Main extends PluginBase {
     }
 
     public function getLangMessage(string $key, array $replace = []): string {
-        $message = $this->lang->getNested("messages." . $key, "Message introuvable pour la clé : " . $key);
+        $message = $this->lang->getNested("messages." . $key, "Message not found : " . $key);
         foreach ($replace as $search => $value) {
             $message = str_replace("{" . $search . "}", $value, $message);
         }

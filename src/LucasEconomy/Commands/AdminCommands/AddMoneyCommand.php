@@ -12,7 +12,7 @@ class AddMoneyCommand extends Command {
     private $plugin;
 
     public function __construct(Main $plugin) {
-        parent::__construct("addmoney", "Ajouter de l'argent à un joueur.", "/addmoney <joueur> <montant>");
+        parent::__construct("addmoney", $plugin->getLangMessage("commands.addmoney.description"), "/addmoney <joueur> <montant>");
         $this->plugin = $plugin;
         $this->setPermission("lucaseconomy.admin");
     }

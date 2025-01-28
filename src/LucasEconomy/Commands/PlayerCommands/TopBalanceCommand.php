@@ -11,7 +11,7 @@ class TopBalanceCommand extends Command {
     private $plugin;
 
     public function __construct(Main $plugin) {
-        parent::__construct("top", "Voir le classement des joueurs les plus riches.");
+        parent::__construct("topmoney", $plugin->getLangMessage("commands.topmoney.description"));
         $this->setPermission("lucaseconomy.top");
         $this->plugin = $plugin;
     }
