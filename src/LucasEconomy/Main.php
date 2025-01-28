@@ -3,6 +3,7 @@
 namespace LucasEconomy;
 
 use pocketmine\plugin\PluginBase;
+use pocketmine\utils\Config;
 use LucasEconomy\Manager\EconomyManager;
 use LucasEconomy\Commands\PlayerCommands\BalanceCommand;
 use LucasEconomy\Commands\PlayerCommands\PayCommand;
@@ -15,6 +16,7 @@ class Main extends PluginBase {
 
     private static $instance;
     private $economyManager;
+    private $lang;
 
     public function onEnable(): void {
         self::$instance = $this;
@@ -23,13 +25,15 @@ class Main extends PluginBase {
         $this->saveResource("lang.yml");
         $this->reloadConfig();
 
+        $this->lang = new Config($this->getDataFolder() . "lang.yml", Config::YAML);
+
         $this->economyManager = new EconomyManager($this->getDataFolder() . "players.json");
 
         $this->getServer()->getCommandMap()->register("LucasEconomy", new BalanceCommand($this));
         $this->getServer()->getCommandMap()->register("LucasEconomy", new PayCommand($this));
         $this->getServer()->getCommandMap()->register("LucasEconomy", new TopBalanceCommand($this));
 
-            $this->getServer()->getCommandMap()->register("LucasEconomy", new AddMoneyCommand($this));
+        $this->getServer()->getCommandMap()->register("LucasEconomy", new AddMoneyCommand($this));
         $this->getServer()->getCommandMap()->register("LucasEconomy", new RemoveMoneyCommand($this));
         $this->getServer()->getCommandMap()->register("LucasEconomy", new SetMoneyCommand($this));
 
@@ -49,21 +53,17 @@ class Main extends PluginBase {
     }
 
     public function getLangMessage(string $key, array $placeholders = []): string {
-        // Charge le message depuis le fichier lang.yml
         $message = $this->lang->getNested($key, null);
 
-        // Si le message n'existe pas, retourne une erreur par défaut
         if ($message === null) {
             $this->getLogger()->error("Message introuvable pour la clé : $key");
             return "Message manquant : $key";
         }
 
-        // Remplacement des placeholders
         foreach ($placeholders as $placeholder => $value) {
             $message = str_replace("{" . $placeholder . "}", $value, $message);
         }
 
         return $message;
     }
-
 }
