@@ -26,6 +26,11 @@ class EconomyManager {
         file_put_contents($this->dataPath, json_encode($this->balances));
     }
 
+    public function closeDatabase(): void {
+        $this->savePlayerData();
+    }
+
+
     public function getBalance(Player $player): float {
         $playerName = $player->getName();
         return $this->balances[$playerName] ?? 0;
@@ -56,6 +61,7 @@ class EconomyManager {
         }
         return false;
     }
+
 
     public function getTopBalances(int $limit = 10): array {
         arsort($this->balances);

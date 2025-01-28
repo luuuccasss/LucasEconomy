@@ -40,6 +40,8 @@ class Main extends PluginBase {
     }
 
     public function onDisable(): void {
+        $this->economyManager->closeDatabase();
+
         $this->getLogger()->info("LucasEconomy désactivé !");
     }
 
@@ -49,5 +51,18 @@ class Main extends PluginBase {
 
     public function getEconomyManager(): EconomyManager {
         return $this->economyManager;
+    }
+
+
+    public function getLangMessage(string $key, array $placeholders = []): string {
+        $messages = yaml_parse_file($this->getDataFolder() . "lang.yml");
+
+        $message = $messages['messages'][$key] ?? "Message introuvable ($key)";
+
+        foreach ($placeholders as $placeholder => $value) {
+            $message = str_replace("{" . $placeholder . "}", $value, $message);
+        }
+
+        return $message;
     }
 }

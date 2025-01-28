@@ -19,25 +19,30 @@ class RemoveMoneyCommand extends Command {
 
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
         if (count($args) < 2) {
-            $sender->sendMessage("Usage: /removemoney <joueur> <montant>");
+            $sender->sendMessage($this->plugin->getLangMessage("usage.removemoney"));
             return false;
         }
 
         $target = $this->plugin->getServer()->getPlayerByPrefix($args[0]);
         if (!$target instanceof Player) {
-            $sender->sendMessage("Joueur introuvable.");
+            $sender->sendMessage($this->plugin->getLangMessage("errors.player_not_found"));
             return false;
         }
 
         $amount = (float) $args[1];
         if ($amount <= 0) {
-            $sender->sendMessage("Montant invalide.");
+            $sender->sendMessage($this->plugin->getLangMessage("errors.invalid_amount"));
             return false;
         }
 
         $this->plugin->getEconomyManager()->removeMoney($target, $amount);
-        $sender->sendMessage("Vous avez retiré $amount à " . $target->getName());
-        $target->sendMessage("Vous avez perdu $amount.");
+        $sender->sendMessage($this->plugin->getLangMessage("success.removemoney", [
+            "amount" => $amount,
+            "player" => $target->getName()
+        ]));
+        $target->sendMessage($this->plugin->getLangMessage("success.removemoney_target", [
+            "amount" => $amount
+        ]));
         return true;
     }
 }

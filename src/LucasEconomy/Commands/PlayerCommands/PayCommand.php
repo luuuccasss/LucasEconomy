@@ -20,31 +20,37 @@ class PayCommand extends Command {
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
         if ($sender instanceof Player) {
             if (count($args) < 2) {
-                $sender->sendMessage("Usage: /pay <joueur> <montant>");
+                $sender->sendMessage($this->plugin->getLangMessage("usage.pay"));
                 return false;
             }
 
             $target = $this->plugin->getServer()->getPlayerByPrefix($args[0]);
             if (!$target instanceof Player) {
-                $sender->sendMessage("Joueur introuvable.");
+                $sender->sendMessage($this->plugin->getLangMessage("errors.player_not_found"));
                 return false;
             }
 
             $amount = (float) $args[1];
             if ($amount <= 0) {
-                $sender->sendMessage("Montant invalide.");
+                $sender->sendMessage($this->plugin->getLangMessage("errors.invalid_amount"));
                 return false;
             }
 
             if ($this->plugin->getEconomyManager()->transferMoney($sender, $target, $amount)) {
-                $sender->sendMessage("Vous avez envoyé $amount à " . $target->getName());
-                $target->sendMessage("Vous avez reçu $amount de " . $sender->getName());
+                $sender->sendMessage($this->plugin->getLangMessage("success.pay_sender", [
+                    "amount" => $amount,
+                    "player" => $target->getName()
+                ]));
+                $target->sendMessage($this->plugin->getLangMessage("success.pay_receiver", [
+                    "amount" => $amount,
+                    "player" => $sender->getName()
+                ]));
             } else {
-                $sender->sendMessage("Solde insuffisant.");
+                $sender->sendMessage($this->plugin->getLangMessage("errors.insufficient_balance"));
             }
             return true;
         }
-        $sender->sendMessage("Cette commande doit être utilisée en jeu.");
+        $sender->sendMessage($this->plugin->getLangMessage("errors.in_game_only"));
         return false;
     }
 }

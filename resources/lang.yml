@@ -1,0 +1,21 @@
+messages:
+  usage:
+    addmoney: "Usage: /addmoney <joueur> <montant>"
+    removemoney: "Usage: /removemoney <joueur> <montant>"
+    setmoney: "Usage: /setmoney <joueur> <montant>"
+    pay: "Usage: /pay <joueur> <montant>"
+  errors:
+    player_not_found: "Joueur introuvable."
+    invalid_amount: "Montant invalide."
+    insufficient_balance: "Solde insuffisant."
+    in_game_only: "Cette commande doit être utilisée en jeu."
+  success:
+    addmoney: "Vous avez ajouté {amount} à {player}."
+    removemoney: "Vous avez retiré {amount} à {player}."
+    setmoney: "Vous avez défini le solde de {player} à {amount}."
+    pay_sender: "Vous avez envoyé {amount} à {player}."
+    pay_receiver: "Vous avez reçu {amount} de {player}."
+  balance:
+    your_balance: "Votre solde est de : {balance}"
+  top:
+    header: "Classement des joueurs les plus riches :"

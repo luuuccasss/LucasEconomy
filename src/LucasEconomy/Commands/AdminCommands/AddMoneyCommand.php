@@ -19,25 +19,27 @@ class AddMoneyCommand extends Command {
 
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
         if (count($args) < 2) {
-            $sender->sendMessage("Usage: /addmoney <joueur> <montant>");
+            $sender->sendMessage($this->plugin->getLangMessage("usage.addmoney"));
             return false;
         }
 
         $target = $this->plugin->getServer()->getPlayerByPrefix($args[0]);
         if (!$target instanceof Player) {
-            $sender->sendMessage("Joueur introuvable.");
+            $sender->sendMessage($this->plugin->getLangMessage("errors.player_not_found"));
             return false;
         }
 
         $amount = (float) $args[1];
         if ($amount <= 0) {
-            $sender->sendMessage("Montant invalide.");
+            $sender->sendMessage($this->plugin->getLangMessage("errors.invalid_amount"));
             return false;
         }
 
         $this->plugin->getEconomyManager()->addMoney($target, $amount);
-        $sender->sendMessage("Vous avez ajouté $amount à " . $target->getName());
-        $target->sendMessage("Vous avez reçu $amount.");
+        $sender->sendMessage($this->plugin->getLangMessage("success.addmoney", [
+            "amount" => $amount,
+            "player" => $target->getName()
+        ]));
         return true;
     }
 }

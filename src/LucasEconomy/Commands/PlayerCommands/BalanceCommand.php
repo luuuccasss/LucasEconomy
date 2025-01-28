@@ -20,10 +20,12 @@ class BalanceCommand extends Command {
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
         if ($sender instanceof Player) {
             $balance = $this->plugin->getEconomyManager()->getBalance($sender);
-            $sender->sendMessage("Votre solde est de : " . $balance);
+            $sender->sendMessage($this->plugin->getLangMessage("balance.your_balance", [
+                "balance" => $balance
+            ]));
             return true;
         }
-        $sender->sendMessage("Cette commande doit être utilisée en jeu.");
+        $sender->sendMessage($this->plugin->getLangMessage("errors.in_game_only"));
         return false;
     }
 }

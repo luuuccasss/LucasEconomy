@@ -18,7 +18,7 @@ class TopBalanceCommand extends Command {
 
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {
         $topBalances = $this->plugin->getEconomyManager()->getTopBalances();
-        $message = "Classement des joueurs les plus riches :\n";
+        $message = $this->plugin->getLangMessage("top.header") . "\n";
         $position = 1;
 
         foreach ($topBalances as $playerName => $balance) {
