@@ -24,7 +24,7 @@ class Main extends PluginBase {
         $this->reloadConfig();
 
         // Initialiser l'EconomyManager
-        $this->economyManager = new EconomyManager($this);
+        $this->economyManager = new EconomyManager($this->getDataFolder() . "players.json");
 
         // Enregistrer les commandes joueur
         $this->getServer()->getCommandMap()->register("LucasEconomy", new BalanceCommand($this));
@@ -40,7 +40,6 @@ class Main extends PluginBase {
     }
 
     public function onDisable(): void {
-        $this->economyManager->closeDatabase();
         $this->getLogger()->info("LucasEconomy désactivé !");
     }
 
