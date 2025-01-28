@@ -1,0 +1,40 @@
+name: LucasEconomy
+version: 1.0.0
+main: LucasEconomy\Main
+api: 5.0.0
+author: Lucas
+commands:
+  balance:
+    description: "Voir votre solde."
+    usage: "/balance"
+  pay:
+    description: "Envoyer de l'argent à un joueur."
+    usage: "/pay <joueur> <montant>"
+  top:
+    description: "Voir le classement des joueurs les plus riches."
+    usage: "/top"
+  addmoney:
+    description: "Ajouter de l'argent à un joueur."
+    usage: "/addmoney <joueur> <montant>"
+    permission: lucaseconomy.admin
+  removemoney:
+    description: "Retirer de l'argent à un joueur."
+    usage: "/removemoney <joueur> <montant>"
+    permission: lucaseconomy.admin
+  setmoney:
+    description: "Définir le solde d'un joueur."
+    usage: "/setmoney <joueur> <montant>"
+    permission: lucaseconomy.admin
+permissions:
+  lucaseconomy.balance:
+    description: "Permet d'utiliser la commande /balance."
+    default: true
+  lucaseconomy.pay:
+    description: "Permet d'utiliser la commande /pay."
+    default: true
+  lucaseconomy.top:
+    description: "Permet d'utiliser la commande /top."
+    default: true
+  lucaseconomy.admin:
+    description: "Permet d'utiliser les commandes admin."
+    default: op
