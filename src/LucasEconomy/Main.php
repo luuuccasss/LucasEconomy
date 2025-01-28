@@ -29,7 +29,7 @@ class Main extends PluginBase {
         $this->getServer()->getCommandMap()->register("LucasEconomy", new PayCommand($this));
         $this->getServer()->getCommandMap()->register("LucasEconomy", new TopBalanceCommand($this));
 
-        $this->getServer()->getCommandMap()->register("LucasEconomy", new AddMoneyCommand($this));
+            $this->getServer()->getCommandMap()->register("LucasEconomy", new AddMoneyCommand($this));
         $this->getServer()->getCommandMap()->register("LucasEconomy", new RemoveMoneyCommand($this));
         $this->getServer()->getCommandMap()->register("LucasEconomy", new SetMoneyCommand($this));
 
@@ -49,14 +49,21 @@ class Main extends PluginBase {
     }
 
     public function getLangMessage(string $key, array $placeholders = []): string {
-        $messages = yaml_parse_file($this->getDataFolder() . "lang.yml");
+        // Charge le message depuis le fichier lang.yml
+        $message = $this->lang->getNested($key, null);
 
-        $message = $messages['messages'][$key] ?? "Message introuvable ($key)";
+        // Si le message n'existe pas, retourne une erreur par défaut
+        if ($message === null) {
+            $this->getLogger()->error("Message introuvable pour la clé : $key");
+            return "Message manquant : $key";
+        }
 
+        // Remplacement des placeholders
         foreach ($placeholders as $placeholder => $value) {
             $message = str_replace("{" . $placeholder . "}", $value, $message);
         }
 
         return $message;
     }
+
 }
