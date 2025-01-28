@@ -1,0 +1,63 @@
+name: Deploy to Pterodactyl
+
+on:
+  push:
+    branches:
+      - master  # Remplacez par la branche que vous souhaitez surveiller
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Prepare SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+
+    - name: Deploy to Pterodactyl
+      env:
+        SSH_HOST: ${{ secrets.SSH_HOST }}
+        SSH_USER: ${{ secrets.SSH_USER }}
+        REMOTE_PATH: ${{ secrets.REMOTE_PATH }}
+      run: |
+        rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" ./ $SSH_USER@$SSH_HOST:$REMOTE_PATH
+
+    - name: Kill Pterodactyl server
+      env:
+        PTERO_SERVER_ID: ${{ secrets.PTERO_SERVER_ID }}
+        PTERO_API_KEY: ${{ secrets.PTERO_API_KEY }}
+        PTERO_PANEL_URL: "http://134.255.177.207/api/client"
+      run: |
+        curl -X POST "$PTERO_PANEL_URL/servers/$PTERO_SERVER_ID/power" \
+        -H "Authorization: Bearer $PTERO_API_KEY" \
+        -H "Content-Type: application/json" \
+        -d '{"signal": "kill"}'
+
+    - name: Wait for server to be killed
+      run: sleep 3  # Attendre 30 secondes pour s'assurer que le serveur est bien tué
+
+    - name: Start Pterodactyl server
+      env:
+        PTERO_SERVER_ID: ${{ secrets.PTERO_SERVER_ID }}
+        PTERO_API_KEY: ${{ secrets.PTERO_API_KEY }}
+        PTERO_PANEL_URL: "http://134.255.177.207/api/client"
+      run: |
+        curl -X POST "$PTERO_PANEL_URL/servers/$PTERO_SERVER_ID/power" \
+        -H "Authorization: Bearer $PTERO_API_KEY" \
+        -H "Content-Type: application/json" \
+        -d '{"signal": "start"}'
+
+    - name: Verify server status
+      env:
+        PTERO_SERVER_ID: ${{ secrets.PTERO_SERVER_ID }}
+        PTERO_API_KEY: ${{ secrets.PTERO_API_KEY }}
+        PTERO_PANEL_URL: "http://134.255.177.207/api/client"
+      run: |
+        curl -X GET "$PTERO_PANEL_URL/servers/$PTERO_SERVER_ID/resources" \
+        -H "Authorization: Bearer $PTERO_API_KEY" \
+        -H "Content-Type: application/json"
