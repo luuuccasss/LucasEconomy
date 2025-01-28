@@ -13,6 +13,7 @@ class PayCommand extends Command {
 
     public function __construct(Main $plugin) {
         parent::__construct("pay", "Envoyer de l'argent à un joueur.", "/pay <joueur> <montant>");
+        $this->setPermission("lucaseconomy.pay");
         $this->plugin = $plugin;
     }
 
