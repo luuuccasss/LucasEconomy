@@ -4,41 +4,37 @@ namespace LucasEconomy\Manager;
 
 use pocketmine\player\Player;
 use LucasEconomy\Events\MoneyUpdateEvent;
-use SQLite3;
 
 class EconomyManager {
 
     private $balances = [];
-    private $db;
+    private $dataPath;
 
-    public function __construct() {
-        // Initialiser la base de données SQLite
-        $this->db = new SQLite3(__DIR__ . "/../../economy.db");
-        $this->db->exec("CREATE TABLE IF NOT EXISTS balances (player TEXT PRIMARY KEY, balance REAL)");
+    public function __construct(string $dataPath) {
+        $this->dataPath = $dataPath;
+        $this->loadPlayerData();
+    }
+
+    private function loadPlayerData(): void {
+        if (!file_exists($this->dataPath)) {
+            file_put_contents($this->dataPath, json_encode([]));
+        }
+        $this->balances = json_decode(file_get_contents($this->dataPath), true);
+    }
+
+    private function savePlayerData(): void {
+        file_put_contents($this->dataPath, json_encode($this->balances));
     }
 
     public function getBalance(Player $player): float {
         $playerName = $player->getName();
-        if (!isset($this->balances[$playerName])) {
-            // Charger le solde depuis la base de données
-            $stmt = $this->db->prepare("SELECT balance FROM balances WHERE player = :player");
-            $stmt->bindValue(":player", $playerName, SQLITE3_TEXT);
-            $result = $stmt->execute()->fetchArray(SQLITE3_ASSOC);
-            $this->balances[$playerName] = $result ? $result["balance"] : 0;
-        }
-        return $this->balances[$playerName];
+        return $this->balances[$playerName] ?? 0;
     }
 
     public function setBalance(Player $player, float $amount): void {
         $playerName = $player->getName();
         $this->balances[$playerName] = $amount;
-
-        // Sauvegarder dans la base de données
-        $stmt = $this->db->prepare("INSERT OR REPLACE INTO balances (player, balance) VALUES (:player, :balance)");
-        $stmt->bindValue(":player", $playerName, SQLITE3_TEXT);
-        $stmt->bindValue(":balance", $amount, SQLITE3_FLOAT);
-        $stmt->execute();
-
+        $this->savePlayerData();
         $this->callMoneyUpdateEvent($player, $amount);
     }
 
@@ -62,21 +58,12 @@ class EconomyManager {
     }
 
     public function getTopBalances(int $limit = 10): array {
-        // Charger les soldes depuis la base de données
-        $result = $this->db->query("SELECT player, balance FROM balances ORDER BY balance DESC LIMIT $limit");
-        $topBalances = [];
-        while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-            $topBalances[$row["player"]] = $row["balance"];
-        }
-        return $topBalances;
+        arsort($this->balances);
+        return array_slice($this->balances, 0, $limit, true);
     }
 
     private function callMoneyUpdateEvent(Player $player, float $newBalance): void {
         $event = new MoneyUpdateEvent($player, $newBalance);
         $event->call();
-    }
-
-    public function closeDatabase(): void {
-        $this->db->close();
     }
 }

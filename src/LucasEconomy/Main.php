@@ -18,17 +18,24 @@ class Main extends PluginBase {
 
     public function onEnable(): void {
         self::$instance = $this;
-        $this->economyManager = new EconomyManager();
 
+        // Charger la configuration
+        $this->saveDefaultConfig();
+        $this->reloadConfig();
+
+        // Initialiser l'EconomyManager
+        $this->economyManager = new EconomyManager($this);
+
+        // Enregistrer les commandes joueur
         $this->getServer()->getCommandMap()->register("LucasEconomy", new BalanceCommand($this));
         $this->getServer()->getCommandMap()->register("LucasEconomy", new PayCommand($this));
         $this->getServer()->getCommandMap()->register("LucasEconomy", new TopBalanceCommand($this));
 
+        // Enregistrer les commandes admin
         $this->getServer()->getCommandMap()->register("LucasEconomy", new AddMoneyCommand($this));
         $this->getServer()->getCommandMap()->register("LucasEconomy", new RemoveMoneyCommand($this));
         $this->getServer()->getCommandMap()->register("LucasEconomy", new SetMoneyCommand($this));
 
-        $this->saveDefaultConfig();
         $this->getLogger()->info("LucasEconomy activé !");
     }
 
