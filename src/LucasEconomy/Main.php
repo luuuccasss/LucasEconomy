@@ -4,10 +4,17 @@ namespace LucasEconomy;
 
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
+
+// Manager
 use LucasEconomy\Manager\EconomyManager;
+
+// PLayer commands
 use LucasEconomy\Commands\PlayerCommands\BalanceCommand;
 use LucasEconomy\Commands\PlayerCommands\PayCommand;
 use LucasEconomy\Commands\PlayerCommands\TopBalanceCommand;
+use LucasEconomy\Commands\PlayerCommands\SeeMoneyCommand;
+
+// Admins commands
 use LucasEconomy\Commands\AdminCommands\AddMoneyCommand;
 use LucasEconomy\Commands\AdminCommands\RemoveMoneyCommand;
 use LucasEconomy\Commands\AdminCommands\SetMoneyCommand;

@@ -1,6 +1,6 @@
 <?php
 
-namespace LucasEconomy\Commands\AdminCommands;
+namespace LucasEconomy\Commands\PlayerCommands;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -14,11 +14,8 @@ class SeeMoneyCommand extends Command {
 
     public function __construct(Main $plugin) {
         $this->plugin = $plugin;
-
         $description = $this->plugin->getLangMessage("commands.seemoney.description", []);
-
         parent::__construct("seemoney", $description, "/seemoney <player>");
-
         $this->setPermission("lucaseconomy.seemoney");
     }
 
